@@ -2,7 +2,7 @@ import knex from 'knex';
 
 
 //Faz as alterações no banco de dados:
-export async function up(knex: knex){
+export async function up(knex: knex) {
     return knex.schema.createTable('connection', table => {
         table.increments('id').primary();
 
@@ -12,15 +12,15 @@ export async function up(knex: knex){
             .references('id')
             .inTable('users')
             .onUpdate('CASCADE')    //Altera em todos os lugares que dependem da informação
-            .onDelete('CASCADE');  
-            
+            .onDelete('CASCADE');
+
         table.timestamp('created_at')
-            .defaultTo('now()')
+            .defaultTo(knex.raw('CURRENT_TIMESTAMP'))   //Pega o horário e data em que foi criado
             .notNullable();
     });
 }
 
 //Caso tenha algum problema ele desfaz as ações do up:
-export async function down(knex: knex){
+export async function down(knex: knex) {
     return knex.schema.dropTable('connection');
 }

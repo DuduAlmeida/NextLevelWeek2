@@ -1,17 +1,17 @@
 import express from 'express';
+import ClassesController from './controllers/ClassesController';
+import ConnectionController from './controllers/ConnectionController';
 
 const routes = express.Router();
+const classesController = new ClassesController();
+const connectionController = new ConnectionController();
 
-routes.post('/users', (request, response) => {
 
-    const users= [
-        {name: 'DUDU', age: '19'},
-        {name: 'CAETANO', age: '19'},
-        {name: 'JAPA', age: '18'},
-    ]
 
-    return response.json(users);
-});
+routes.get('/classes', classesController.index);
+routes.post('/classes', classesController.create);
 
+routes.get('/connections', connectionController.index);
+routes.post('/connections', connectionController.create);
 
 export default routes;
